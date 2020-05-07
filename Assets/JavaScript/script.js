@@ -36,18 +36,17 @@ saveButtons.on("click", function(){
 
 //colors set on time blocks based on the current hour
 $(".input").each(function(){
-  var hour = $(this).data("hour");
-  console.log(hour);
+  var hour = $(this).attr("name");
 
   if (hour == currentHour){
     $(this).addClass("present");
   }
-  else if (hour > currentHour){
-    $(this).addClass("future");
+  else if (hour < currentHour){
+    $(this).addClass("past");
   }
   else{
-    $(this).addClass("past");
-    console.log("past");
+    $(this).addClass("future");
+    console.log("future");
   }
 
 });
