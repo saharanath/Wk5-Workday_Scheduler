@@ -29,102 +29,157 @@
       <p id="currentDay" class="lead"></p>
     </header>
     
-    
+    <!--Time Blocks-->
+      
     <div class="container">
       
-      <div id="hour-9" class="row time-block">
+      <div class="row time-block">
         <div class="col-md-1 hour">
           9AM
         </div>
-        <textarea class="col-md-10" description></textarea>
-        <button class="btn saveBtn far fa-save col-md-1"></button>
+        <textarea class="col-md-10 input"  id="task-9"></textarea>
+        <button class="btn saveBtn far fa-save col-md-1" data-hour="9"></button>
       </div>
 
-      <div id="hour-10" class="row time-block">
+      <div class="row time-block">
         <div class="col-md-1 hour">
           10AM
         </div>
-        <textarea class="col-md-10" description></textarea>
-        <button class="btn saveBtn far fa-save col-md-1"></button>
+        <textarea class="col-md-10 input"  id="task-10"></textarea>
+        <button class="btn saveBtn far fa-save col-md-1" data-hour="10"></button>
       </div>
 
-      <div id="hour-11" class="row time-block">
+      <div class="row time-block">
         <div class="col-md-1 hour">
           11AM
         </div>
-        <textarea class="col-md-10" description></textarea>
-        <button class="btn saveBtn far fa-save col-md-1"></button>
+        <textarea class="col-md-10 input"  id="task-11"></textarea>
+        <button class="btn saveBtn far fa-save col-md-1" data-hour="11"></button>
       </div>
 
-      <div id="hour-12" class="row time-block">
+      <div class="row time-block">
         <div class="col-md-1 hour">
           12PM
         </div>
-        <textarea class="col-md-10" description></textarea>
-        <button class="btn saveBtn far fa-save col-md-1"></button>
+        <textarea class="col-md-10 input"  id="task-12"></textarea>
+        <button class="btn saveBtn far fa-save col-md-1" data-hour="12"></button>
       </div>
 
-      <div id="hour-13" class="row time-block">
+      <div class="row time-block">
         <div class="col-md-1 hour">
           1PM
         </div>
-        <textarea class="col-md-10" description></textarea>
-        <button class="btn saveBtn far fa-save col-md-1"></button>
+        <textarea class="col-md-10 input"  id="task-13"></textarea>
+        <button class="btn saveBtn far fa-save col-md-1" data-hour="13"></button>
       </div>
 
-      <div id="hour-14" class="row time-block">
+      <div class="row time-block">
         <div class="col-md-1 hour">
           2PM
         </div>
-        <textarea class="col-md-10" description></textarea>
-        <button class="btn saveBtn far fa-save col-md-1"></button>
+        <textarea class="col-md-10 input"  id="task-14"></textarea>
+        <button class="btn saveBtn far fa-save col-md-1" data-hour="14"></button>
       </div>
 
-      <div id="hour-15" class="row time-block">
+      <div class="row time-block">
         <div class="col-md-1 hour">
           2PM
         </div>
-        <textarea class="col-md-10" description></textarea>
-        <button class="btn saveBtn far fa-save col-md-1"></button>
+        <textarea class="col-md-10 input"  id="task-15"></textarea>
+        <button class="btn saveBtn far fa-save col-md-1" data-hour="15"></button>
       </div>
 
-      <div id="hour-16" class="row time-block">
+      <div class="row time-block">
         <div class="col-md-1 hour">
           3PM
         </div>
-        <textarea class="col-md-10" description></textarea>
-        <button class="btn saveBtn far fa-save col-md-1"></button>
+        <textarea class="col-md-10 input"  id="task-16"></textarea>
+        <button class="btn saveBtn far fa-save col-md-1" data-hour="16"></button>
       </div>
 
-      <div id="hour-17" class="row time-block">
+      <div class="row time-block">
+        <div class="col-md-1 hour">
+          4PM
+        </div>
+        <textarea class="col-md-10 input"  id="task-17"></textarea>
+        <button class="btn saveBtn far fa-save col-md-1" data-hour="17"></button>
+      </div>
+
+      <div class="row time-block">
         <div class="col-md-1 hour">
           5PM
         </div>
-        <textarea class="col-md-10" description></textarea>
-        <button class="btn saveBtn far fa-save col-md-1"></button>
-      </div>
-
-      <div id="hour-18" class="row time-block">
-        <div class="col-md-1 hour">
-          5PM
-        </div>
-        <textarea class="col-md-10" description></textarea>
-        <button class="btn saveBtn far fa-save col-md-1"></button>
+        <textarea class="col-md-10 input"  id="task-18"></textarea>
+        <button class="btn saveBtn far fa-save col-md-1" data-hour="18"></button>
       </div>
     </div>
      
-     
-     
-      
-
-     
-              
   
-
-
-   
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script type="text/javascript">
+    
+    //get current date and hour
+    var currentDay = $("#currentDay");
+    var currentHour = moment().hour();
+
+    //display date
+    currentDay.text(moment().format("dddd, MMMM Do YYYY"));
+
+    var saveButtons = $(".btn.saveBtn");
+    var tasks = {};
+
+    var storedTasks = JSON.parse(localStorage.getItem("tasks"));
+
+    if (storedTasks){
+      tasks = storedTasks;
+    }
+
+    saveButtons.each(function(){
+
+      var clickedHour = $(this).data("hour");
+
+      var taskInput = $("#task-" + clickedHour);
+
+      taskInput.val( tasks["task" + clickedHour]);
+
+      
+    });
+
+
+    saveButtons.on("click", function(){
+      
+      var clickedHour = $(this).data("hour");
+
+      var taskInput = $("#task-" + clickedHour);
+      var taskValue = taskInput.val();
+
+      tasks[ "task" + clickedHour] = taskValue;
+
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    });
+
+
+    $(".input").each(function(){
+      var hour = $(this).data("hour");
+      console.log(hour);
+
+      if (hour == currentHour){
+        $(this).addClass("present");
+      }
+      else if (hour > currentHour){
+        $(this).addClass("future");
+      }
+      else{
+        $(this).addClass("past");
+        console.log("past");
+      }
+
+    });
+
+    </script>
+
   </body>
 </html>
